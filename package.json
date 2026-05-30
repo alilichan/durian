@@ -1,7 +1,7 @@
-"homepage": "https://alilichan.github.io/durian"
 {
   "name": "durian-ai",
   "private": true,
+  "homepage": "https://alilichan.github.io/durian",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
