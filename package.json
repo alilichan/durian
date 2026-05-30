@@ -3,6 +3,7 @@
   "private": true,
   "homepage": "https://alilichan.github.io/durian",
   "version": "0.0.0",
+  "homepage": "https://alilichan.github.io/durian",
   "type": "module",
   "scripts": {
     "dev": "vite",
