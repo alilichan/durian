@@ -59,9 +59,9 @@ export default function About() {
             Contact
           </h3>
 
-          <p style={{ color: 'var(--text-dark)' }}>
-            📧 Jeremy Ng: Jeremyng313@gmail.com
-            📧 Alicia Ong: Aliciaong567@gmail.com
+          <p style={{ color: 'var(--text-dark)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <a>📧 Jeremy Ng: Jeremyng313@gmail.com</a>
+            <a>📧 Alicia Ong: Aliciaong567@gmail.com</a>
           </p>
 
         </motion.div>
