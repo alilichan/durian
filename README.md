@@ -62,10 +62,12 @@ Displayed to User
 ### Home Page
 ![Home Page](screenshots/homepage.png)
 
-### Prediction Result
-![Prediction Result](screenshots/result.png)
+### Input Image
+![Home Page](screenshots/input.png)
 
-> To add screenshots, create a `screenshots/` folder in the root and add `homepage.png` and `result.png`.
+### Prediction Result
+![Prediction Result](screenshots/results.png)
+
 
 ---
 
