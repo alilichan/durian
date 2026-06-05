@@ -232,3 +232,70 @@ footer {
   text-align: center; line-height: 1.6;
 }
 footer strong { color: var(--text-dark); font-weight: 500; }
+
+
+/* ── navbar ── */
+.navbar {
+  width: 100%;
+  max-width: 760px;
+  margin: 20px auto 0 auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 14px 20px;
+
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(14px);
+
+  border: 1.5px solid var(--cream-dark);
+  border-radius: 16px;
+
+  box-shadow: 0 2px 18px rgba(26, 58, 42, 0.06);
+
+  position: sticky;
+  top: 16px;
+  z-index: 1000;
+}
+
+/* brand (🍈 Durian AI) */
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--green-deep);
+  letter-spacing: -0.3px;
+}
+
+/* links container */
+.nav-links {
+  display: flex;
+  gap: 18px;
+}
+
+/* links */
+.nav-links a {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+
+  color: var(--text-muted);
+  text-decoration: none;
+
+  padding: 6px 10px;
+  border-radius: 10px;
+
+  transition: all 0.2s ease;
+}
+
+/* hover effect matching your gold theme */
+.nav-links a:hover {
+  color: var(--green-deep);
+  background: rgba(201, 168, 76, 0.12);
+}
+
+/* optional active style (if you want later) */
+.nav-links a:active {
+  transform: scale(0.97);
+}

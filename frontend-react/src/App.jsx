@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Upload, RefreshCw } from 'lucide-react'
+import { Routes, Route, Link } from 'react-router-dom'
+import About from './About'
 import './App.css'
 
 const API_URL = 'http://localhost:8000/predict'
@@ -11,7 +13,19 @@ const QUALITY_CONFIG = {
   Bad:     { emoji: '❌', color: '#A12020', bg: '#FDECEA', bar: '#D94040' },
 }
 
-export default function App() {
+/* ───────── NAVBAR ───────── */
+const Navbar = () => (
+  <nav className="navbar">
+    <div className="nav-brand">🍈 Durian AI</div>
+    <div className="nav-links">
+      <Link to="/">Home</Link>
+      <Link to="/about">About Us</Link>
+    </div>
+  </nav>
+)
+
+/* ───────── HOME PAGE (your full app) ───────── */
+function Home() {
   const [file, setFile]         = useState(null)
   const [preview, setPreview]   = useState(null)
   const [dragging, setDragging] = useState(false)
@@ -38,14 +52,21 @@ export default function App() {
     setLoading(true)
     setError(null)
     setResult(null)
+
     const form = new FormData()
     form.append('file', file)
+
     try {
-      const res = await fetch(API_URL, { method: 'POST', body: form })
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        body: form
+      })
+
       if (!res.ok) {
         const e = await res.json().catch(() => ({}))
         throw new Error(e.error || `Server error ${res.status}`)
       }
+
       setResult(await res.json())
     } catch (e) {
       setError(e.message)
@@ -55,169 +76,207 @@ export default function App() {
   }
 
   const reset = () => {
-    setFile(null); setPreview(null); setResult(null); setError(null)
+    setFile(null)
+    setPreview(null)
+    setResult(null)
+    setError(null)
   }
 
   return (
-    <div className="page">
-      {/* bg blobs */}
-      <div className="blob blob-1" />
-      <div className="blob blob-2" />
+    <div className="wrapper">
 
-      <div className="wrapper">
-        {/* header */}
-        <motion.header
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <motion.div
-            className="logo"
-            animate={{ y: [0, -8, 0] }}
-            transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut' }}
-          >
-            🍈
-          </motion.div>
-          <h1>Durian <span>AI</span></h1>
-          <p>Upload a Musang King shell photo to instantly assess its quality using computer vision.</p>
-        </motion.header>
-
-        {/* upload zone */}
+      {/* header */}
+      <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <motion.div
-          className={`drop-zone ${dragging ? 'dragging' : ''} ${preview ? 'has-image' : ''}`}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          onClick={() => !preview && document.getElementById('file-input').click()}
-          onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
-          onDragLeave={() => setDragging(false)}
-          onDrop={onDrop}
+          className="logo"
+          animate={{ y: [0, -8, 0] }}
+          transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut' }}
         >
-          <input
-            id="file-input"
-            type="file"
-            accept="image/*"
-            style={{ display: 'none' }}
-            onChange={(e) => handleFile(e.target.files[0])}
-          />
-
-          <AnimatePresence mode="wait">
-            {!preview ? (
-              <motion.div
-                key="empty"
-                className="drop-content"
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              >
-                <div className="upload-icon-wrap">
-                  <Upload size={28} color="var(--text-muted)" />
-                </div>
-                <p className="drop-label">Drop your image here</p>
-                <p className="drop-hint">or click to browse — JPG, PNG, WEBP</p>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="preview"
-                className="preview-content"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <img src={preview} alt="Selected durian" className="preview-img" />
-                <button
-                  className="change-btn"
-                  onClick={(e) => { e.stopPropagation(); document.getElementById('file-input').click() }}
-                >
-                  <RefreshCw size={13} style={{ marginRight: 6 }} />
-                  Change image
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          🍈
         </motion.div>
 
-        {/* analyse button */}
-        <AnimatePresence>
-          {preview && (
-            <motion.button
-              className="analyse-btn"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              onClick={analyse}
-              disabled={loading}
-            >
-              {loading
-                ? <><span className="spinner" /> Analysing…</>
-                : 'Analyse quality'
-              }
-            </motion.button>
-          )}
-        </AnimatePresence>
+        <h1>Durian <span>AI</span></h1>
+        <p>Upload a Musang King shell photo to instantly assess its quality using computer vision.</p>
+      </motion.header>
 
-        {/* error */}
-        <AnimatePresence>
-          {error && (
+      {/* upload zone */}
+      <motion.div
+        className={`drop-zone ${dragging ? 'dragging' : ''} ${preview ? 'has-image' : ''}`}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        onClick={() => !preview && document.getElementById('file-input').click()}
+        onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
+        onDragLeave={() => setDragging(false)}
+        onDrop={onDrop}
+      >
+        <input
+          id="file-input"
+          type="file"
+          accept="image/*"
+          style={{ display: 'none' }}
+          onChange={(e) => handleFile(e.target.files[0])}
+        />
+
+        <AnimatePresence mode="wait">
+          {!preview ? (
             <motion.div
-              className="error-box"
-              initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+              key="empty"
+              className="drop-content"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
             >
-              ⚠️ {error} — make sure the backend is running at localhost:8000
+              <div className="upload-icon-wrap">
+                <Upload size={28} color="var(--text-muted)" />
+              </div>
+              <p className="drop-label">Drop your image here</p>
+              <p className="drop-hint">or click to browse — JPG, PNG, WEBP</p>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="preview"
+              className="preview-content"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <img src={preview} alt="Selected durian" className="preview-img" />
+
+              <button
+                className="change-btn"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  document.getElementById('file-input').click()
+                }}
+              >
+                <RefreshCw size={13} style={{ marginRight: 6 }} />
+                Change image
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
+      </motion.div>
 
-        {/* result */}
-        <AnimatePresence>
-          {result && (
-            <motion.div
-              className="result-card"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+      {/* analyse button */}
+      <AnimatePresence>
+        {preview && (
+          <motion.button
+            className="analyse-btn"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            onClick={analyse}
+            disabled={loading}
+          >
+            {loading
+              ? <><span className="spinner" /> Analysing…</>
+              : 'Analyse quality'
+            }
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* error */}
+      <AnimatePresence>
+        {error && (
+          <motion.div
+            className="error-box"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+          >
+            ⚠️ {error} — make sure the backend is running at localhost:8000
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* result */}
+      <AnimatePresence>
+        {result && (
+          <motion.div
+            className="result-card"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <div
+              className="result-header"
+              style={{ background: QUALITY_CONFIG[result.prediction].bg }}
             >
-              {/* header */}
-              <div className="result-header" style={{ background: QUALITY_CONFIG[result.prediction].bg }}>
-                <span className="result-emoji">{QUALITY_CONFIG[result.prediction].emoji}</span>
-                <div>
-                  <div className="result-label" style={{ color: QUALITY_CONFIG[result.prediction].color }}>
-                    {result.prediction}
-                  </div>
-                  <div className="result-conf">{result.confidence}% confidence</div>
+              <span className="result-emoji">
+                {QUALITY_CONFIG[result.prediction].emoji}
+              </span>
+
+              <div>
+                <div
+                  className="result-label"
+                  style={{ color: QUALITY_CONFIG[result.prediction].color }}
+                >
+                  {result.prediction}
+                </div>
+                <div className="result-conf">
+                  {result.confidence}% confidence
                 </div>
               </div>
+            </div>
 
-              {/* bars */}
-              <div className="result-bars">
-                {['Good', 'Average', 'Bad'].map((name) => (
-                  <div key={name} className="bar-row">
-                    <span className="bar-name">{name}</span>
-                    <div className="bar-track">
-                      <motion.div
-                        className="bar-fill"
-                        style={{ background: QUALITY_CONFIG[name].bar }}
-                        initial={{ width: 0 }}
-                        animate={{ width: `${result.probabilities[name]}%` }}
-                        transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1], delay: 0.1 }}
-                      />
-                    </div>
-                    <span className="bar-pct">{result.probabilities[name].toFixed(1)}%</span>
+            <div className="result-bars">
+              {['Good', 'Average', 'Bad'].map((name) => (
+                <div key={name} className="bar-row">
+                  <span className="bar-name">{name}</span>
+
+                  <div className="bar-track">
+                    <motion.div
+                      className="bar-fill"
+                      style={{ background: QUALITY_CONFIG[name].bar }}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${result.probabilities[name]}%` }}
+                      transition={{ duration: 0.8 }}
+                    />
                   </div>
-                ))}
-              </div>
 
-              {/* try another */}
-              <div className="result-footer">
-                <button className="try-btn" onClick={reset}>Try another image</button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                  <span className="bar-pct">
+                    {result.probabilities[name].toFixed(1)}%
+                  </span>
+                </div>
+              ))}
+            </div>
 
-        <footer>
-          Built for <strong>UCWS Singapore Hackathon 2026</strong> · Powered by ResNet18 + PyTorch
-        </footer>
-      </div>
+            <div className="result-footer">
+              <button className="try-btn" onClick={reset}>
+                Try another image
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <footer>
+        Built for <strong>UCWS Singapore Hackathon 2026</strong> · Powered by ResNet18 + PyTorch
+      </footer>
+    </div>
+  )
+}
+
+/* ───────── APP ROUTER ───────── */
+export default function App() {
+  return (
+    <div className="page">
+
+      {/* NAVBAR */}
+      <Navbar />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+
     </div>
   )
 }
