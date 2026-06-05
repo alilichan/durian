@@ -315,7 +315,8 @@ The workflow significantly reduces manual labelling effort and provides a founda
 
 # Team
 
-UCWS Singapore Hackathon 2026 Submission
+Alicia Ong
+Jeremy Ng
 
 ### Built With
 
