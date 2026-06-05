@@ -23,6 +23,13 @@ External characteristics such as shape, stem condition, shell appearance, spikes
 Durian AI explores whether computer vision can assist in automating this assessment process using only shell images.
 
 ---
+## Application Preview
+
+### Home Page
+![Home Page](screenshots/homepage.png)
+
+### Prediction Result
+![Prediction](screenshots/prediction.png)
 
 # Solution
 
