@@ -1,0 +1,21 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #C9A84C;
+  --gold-light: #F5E6B8;
+  --gold-dark: #7A5C1E;
+  --green-deep: #1A3A2A;
+  --green-mid: #2D5A3D;
+  --green-light: #4A8C5C;
+  --cream: #FAF7F0;
+  --cream-dark: #EDE8DC;
+  --text-dark: #1C1A14;
+  --text-muted: #6B6353;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text-dark);
+  min-height: 100vh;
+}
