@@ -315,8 +315,8 @@ The workflow significantly reduces manual labelling effort and provides a founda
 
 # Team
 
-Alicia Ong
-Jeremy Ng
+- Alicia Ong
+- Jeremy Ng
 
 ### Built With
 
