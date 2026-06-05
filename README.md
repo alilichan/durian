@@ -8,6 +8,14 @@ Built for the **UCWS Singapore Hackathon 2026** by Alicia Ong & Jeremy Ng.
 
 ---
 
+## Problem Statement
+
+Assessing Musang King quality traditionally relies on manual inspection and experience.
+
+Quality grading can be subjective and inconsistent, especially when performed at scale.
+
+Durian AI explores whether computer vision can assist in automating this process using shell images.
+
 ## Prerequisites
 
 Make sure you have these installed before starting:
@@ -16,6 +24,56 @@ Make sure you have these installed before starting:
 - [Node.js 18+](https://nodejs.org/)
 
 ---
+
+## Solution Overview
+
+Durian AI uses a multi-stage AI pipeline:
+
+1. Vision-Language Model feature extraction
+2. Rule-based quality scoring
+3. ResNet18 image classification
+4. Interactive web application
+
+The system predicts whether a Musang King durian belongs to one of three quality categories:
+
+- Good
+- Average
+- Bad
+
+## System Architecture
+
+```text
+Musang King Image
+        ↓
+React Frontend
+        ↓
+Python Backend
+        ↓
+ResNet18 Model
+        ↓
+Quality Prediction
+        ↓
+Displayed to User
+
+
+---
+
+### Add screenshots
+
+Create:
+
+```text
+screenshots/
+
+## Application Preview
+
+### Home Page
+
+![Home Page](screenshots/homepage.png)
+
+### Prediction Result
+
+![Prediction Result](screenshots/result.png)
 
 ## Project Structure
 
